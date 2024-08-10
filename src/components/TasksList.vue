@@ -8,17 +8,28 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'toggleTask', id: number): void
+  (e: 'showTask', id: number): void
 }>()
 
 const onToogleEvent = (id: number) => {
   emit('toggleTask', id)
+}
+
+const onShowTask = (id: number) => {
+  emit('showTask', id)
 }
 </script>
 
 <template>
   <div class="flex flex-col space-y-2">
     <TransitionGroup name="list">
-      <TaskItem v-for="task in tasks" :key="task.id" :task="task" @toggle-task="onToogleEvent" />
+      <TaskItem
+        v-for="task in tasks"
+        :key="task.id"
+        :task="task"
+        @toggle-task="onToogleEvent"
+        @show-task="onShowTask"
+      />
     </TransitionGroup>
   </div>
 </template>

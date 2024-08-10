@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import type { Task } from '@/stores/tasks'
 import { ElCheckbox } from 'element-plus'
 
@@ -9,7 +9,15 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'toggleTask', id: number): void
+  (e: 'showTask', id: number): void
 }>()
+
+watch(
+  () => props.task.isCompleted,
+  () => {
+    isTaskCompleted.value = props.task.isCompleted
+  }
+)
 
 const isTaskCompleted = ref(props.task.isCompleted)
 </script>
@@ -17,14 +25,14 @@ const isTaskCompleted = ref(props.task.isCompleted)
 <template>
   <div
     class="flex cursor-pointer space-x-2 rounded border border-slate-100 bg-white p-2 shadow-sm transition hover:border-slate-400"
+    @click="() => emit('showTask', task.id)"
   >
-    <div>
-      <el-checkbox
-        v-model="isTaskCompleted"
-        size="large"
-        @change="() => emit('toggleTask', task.id)"
-      />
-    </div>
+    <el-checkbox
+      v-model="isTaskCompleted"
+      size="large"
+      @change="() => emit('toggleTask', task.id)"
+      @click.stop
+    />
 
     <div class="flex flex-col">
       <div class="font-light">{{ task.title }}</div>
