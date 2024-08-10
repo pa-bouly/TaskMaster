@@ -11,4 +11,5 @@ body {
 
 #app {
   @apply h-full;
+  background-color: #faf9f8;
 }

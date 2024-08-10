@@ -13,11 +13,23 @@ export const useTasksStore = defineStore('tasks', () => {
   const tasks = ref<Task[]>([])
 
   const addTask = (title: string) => {
-    tasks.value.push({
+    tasks.value.unshift({
       id: tasks.value.length + 1,
       title,
+      description: 'aaaa',
       isCompleted: false
     })
+  }
+
+  const completedTasks = computed(() => {
+    return tasks.value.filter((task) => task.isCompleted)
+  })
+
+  const toggleTask = (id: number) => {
+    const task = tasks.value.find((task) => task.id === id)
+    if (task) {
+      task.isCompleted = !task.isCompleted
+    }
   }
 
   const removeTask = (id: number) => {
@@ -25,14 +37,11 @@ export const useTasksStore = defineStore('tasks', () => {
     tasks.value.splice(index, 1)
   }
 
-  const completedTasks = computed(() => {
-    return tasks.value.filter((task) => task.isCompleted)
-  })
-
   return {
     tasks,
+    completedTasks,
     addTask,
-    removeTask,
-    completedTasks
+    toggleTask,
+    removeTask
   }
 })
