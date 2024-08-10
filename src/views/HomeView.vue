@@ -17,8 +17,8 @@ const onToggleEvent = (id: number) => {
 
 <template>
   <main>
-    <div class="container mx-auto py-4 px-2 mt-2">
-      <div class="flex justify-between items-center">
+    <div class="container mx-auto mt-2 px-2 py-4">
+      <div class="flex items-center justify-between">
         <div>{{ store.tasks.length }} tasks</div>
 
         <div>{{ store.completedTasks.length }} completed tasks</div>

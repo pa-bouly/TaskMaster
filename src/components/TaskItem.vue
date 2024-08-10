@@ -16,7 +16,7 @@ const isTaskCompleted = ref(props.task.isCompleted)
 
 <template>
   <div
-    class="border border-slate-100 rounded shadow-sm p-2 bg-white flex space-x-2 hover:border-slate-400 transition cursor-pointer"
+    class="flex cursor-pointer space-x-2 rounded border border-slate-100 bg-white p-2 shadow-sm transition hover:border-slate-400"
   >
     <div>
       <el-checkbox
@@ -28,7 +28,7 @@ const isTaskCompleted = ref(props.task.isCompleted)
 
     <div class="flex flex-col">
       <div class="font-light">{{ task.title }}</div>
-      <div class="text-sm text-gray-500 font-light">{{ task.description }}</div>
+      <div class="text-sm font-light text-gray-500">{{ task.description }}</div>
 
       <div>{{ task.dueDate }}</div>
     </div>
