@@ -2,6 +2,7 @@
 import { ref, watch } from 'vue'
 import type { Task } from '@/stores/tasks'
 import { ElCheckbox } from 'element-plus'
+import { useDateFormat } from '@vueuse/core'
 
 const props = defineProps<{
   task: Task
@@ -19,7 +20,20 @@ watch(
   }
 )
 
+watch(
+  () => props.task.dueDate,
+  () => {
+    formattedDueDate.value = props.task.dueDate
+      ? useDateFormat(props.task.dueDate, 'YYYY-MM-DD').value
+      : ''
+  }
+)
+
 const isTaskCompleted = ref(props.task.isCompleted)
+
+const formattedDueDate = ref(
+  props.task.dueDate ? useDateFormat(props.task.dueDate, 'YYYY-MM-DD').value : ''
+)
 </script>
 
 <template>
@@ -38,7 +52,7 @@ const isTaskCompleted = ref(props.task.isCompleted)
       <div class="font-light">{{ task.title }}</div>
       <div class="text-sm font-light text-gray-500">{{ task.description }}</div>
 
-      <div>{{ task.dueDate }}</div>
+      <div>{{ formattedDueDate }}</div>
     </div>
   </div>
 </template>

@@ -21,12 +21,13 @@ export const useTasksStore = defineStore('tasks', () => {
     return taskToEdit.value !== null
   })
 
-  const addTask = (title: string) => {
+  const addTask = (newTask: Omit<Task, 'id' | 'isCompleted'>) => {
     tasks.value.unshift({
       id: tasks.value.length + 1,
-      title,
-      description: 'aaaa',
-      isCompleted: false
+      isCompleted: false,
+      title: newTask.title,
+      description: newTask.description,
+      dueDate: newTask.dueDate
     })
   }
 

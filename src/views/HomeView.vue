@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { useTasksStore } from '@/stores/tasks'
-import { ElButton } from 'element-plus'
-import { Plus } from '@element-plus/icons-vue'
+import { useTasksStore, type Task } from '@/stores/tasks'
 import TasksList from '@/components/TasksList.vue'
 import TaskDialog from '@/components/TaskDialog.vue'
+import NewTaskItem from '@/components/NewTaskItem.vue'
 
 const store = useTasksStore()
 
-const onAddTask = () => {
-  store.addTask('new task')
+const onAddTask = (task: Omit<Task, 'id' | 'isCompleted'>) => {
+  store.addTask(task)
 }
 
 const onToggleEvent = (id: number) => {
@@ -23,13 +22,13 @@ const onShowTask = (id: number) => {
 <template>
   <main>
     <div class="container mx-auto mt-2 px-2 py-4">
-      <div class="flex items-center justify-between">
+      <div class="mb-2 flex items-center justify-between">
         <div>{{ store.tasks.length }} tasks</div>
 
         <div>{{ store.completedTasks.length }} completed task(s)</div>
       </div>
 
-      <el-button pre @click="onAddTask" :icon="Plus" class="my-2">Add task</el-button>
+      <NewTaskItem class="mb-2" @add-task="onAddTask" />
 
       <TasksList :tasks="store.tasks" @toggle-task="onToggleEvent" @show-task="onShowTask" />
     </div>
