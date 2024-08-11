@@ -48,11 +48,11 @@ const onSaveClick = () => {
   >
     <div>
       <div v-if="currentTask" class="flex space-x-2">
-        <CheckboxRounded v-model="currentTask.isCompleted" />
+        <CheckboxRounded v-model="currentTask.isCompleted" aria-label="checkbox-task" />
 
         <div class="flex flex-1 flex-col space-y-2">
           <div class="max-w-screen-sm">
-            <el-input v-model="currentTask.title" />
+            <el-input v-model="currentTask.title" placeholder="title" />
           </div>
 
           <div class="max-w-screen-sm">

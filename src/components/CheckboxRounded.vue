@@ -3,7 +3,7 @@ import { ElCheckbox } from 'element-plus'
 </script>
 
 <template>
-  <el-checkbox v-bind="$attrs" class="checkbox-rounded" />
+  <el-checkbox v-bind="$attrs" class="checkbox-rounded" aria-label="check-task" />
 </template>
 
 <style>

@@ -69,13 +69,13 @@ const dueDateStatus = computed(() => {
 const dueDateStatusColor = computed(() => {
   switch (dueDateStatus.value) {
     case DueDateStatus.Expired:
-      return 'text-red-500'
+      return 'text-red-600'
     case DueDateStatus.Yesterday:
-      return 'text-yellow-500'
+      return 'text-yellow-700'
     case DueDateStatus.Today:
-      return 'text-violet-500'
+      return 'text-violet-600'
     case DueDateStatus.Future:
-      return 'text-green-500'
+      return 'text-green-700'
     default:
       return 'text-gray-500'
   }
@@ -122,7 +122,7 @@ const dueDateLabel = computed(() => {
     <div class="flex items-center">
       <el-popconfirm title="Are you sure to delete this?" @confirm="emit('deleteTask', task.id)">
         <template #reference>
-          <el-button :icon="Delete" circle @click.stop />
+          <el-button :icon="Delete" circle @click.stop aria-label="delete" />
         </template>
       </el-popconfirm>
     </div>

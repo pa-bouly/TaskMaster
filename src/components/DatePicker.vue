@@ -49,6 +49,7 @@ const disabledDate = (time: Date) => {
     v-bind="$attrs"
     type="date"
     placeholder="Due date"
+    aria-label="datepicker-task"
     :disabled-date="disabledDate"
     :shortcuts="shortcuts"
   />

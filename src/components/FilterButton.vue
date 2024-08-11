@@ -15,6 +15,15 @@ import DatePicker from '@/components/DatePicker.vue'
 
 const store = useTasksStore()
 
+interface Props {
+  isOpenByDefault?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  isOpenByDefault: false
+})
+
+const showPopper = ref(props.isOpenByDefault)
 const directionValue = ref(SortDirection.asc)
 const filterDueDate = ref<Date | null>(null)
 const filterIsCompleted = ref(true)
@@ -50,15 +59,20 @@ const onResetClick = () => {
 </script>
 
 <template>
-  <Popper arrow>
-    <el-button :icon="Operation"> View </el-button>
+  <Popper arrow v-bind:show="props.isOpenByDefault ? showPopper : undefined">
+    <el-button :icon="Operation" @click="showPopper = true"> View </el-button>
     <template #content>
       <div class="shadow-mg round relative border bg-white p-4">
         <div class="flex items-center">
           <el-icon><CircleCheck /></el-icon>
           <div class="flex flex-1 items-center justify-between">
             <span class="ml-2 mr-4 text-xs">Completed</span>
-            <el-switch v-model="filterIsCompleted" size="small" @change="updateFilter" />
+            <el-switch
+              v-model="filterIsCompleted"
+              size="small"
+              @change="updateFilter"
+              aria-label="switch-to-show-completed-tasks"
+            />
           </div>
         </div>
         <div class="mt-2">
@@ -116,7 +130,7 @@ const onResetClick = () => {
         </div>
 
         <div class="mt-2 border-solid">
-          <el-button type="danger" text size="small" @click="onResetClick">Reset</el-button>
+          <el-button type="danger" size="small" @click="onResetClick">Reset</el-button>
         </div>
       </div>
     </template>
