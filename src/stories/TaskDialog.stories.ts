@@ -62,3 +62,19 @@ export const FilledForm: Story = {
     expect(task.description).toBe(descriptionUpdate)
   }
 }
+
+export const CancelForm: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const titleUpdate = 'Task title updated'
+
+    const titleInput = canvas.getByTestId('task-title-input')
+    await userEvent.clear(titleInput)
+    await userEvent.type(titleInput, titleUpdate)
+
+    await userEvent.click(canvas.getByTestId('cancel-task-button'))
+
+    // verify the input value
+    expect(titleInput).toHaveValue('Task 1')
+  }
+}

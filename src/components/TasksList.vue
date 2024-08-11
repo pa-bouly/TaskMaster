@@ -4,6 +4,7 @@ import type { Task } from '@/stores/tasks'
 
 defineProps<{
   tasks: Task[]
+  useTeleport?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -32,6 +33,7 @@ const onDeleteTask = (id: number) => {
         v-for="task in tasks"
         :key="task.id"
         :task="task"
+        :use-teleport="useTeleport"
         @toggle-task="onToogleEvent"
         @show-task="onShowTask"
         @delete-task="onDeleteTask"

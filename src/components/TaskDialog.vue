@@ -76,7 +76,7 @@ const onSaveClick = () => {
           <DatePicker v-model="currentTask.dueDate" />
 
           <div class="mt-4 flex justify-between">
-            <el-button @click="onCancelClick">Cancel</el-button>
+            <el-button @click="onCancelClick" data-testid="cancel-task-button">Cancel</el-button>
             <el-button
               :disabled="!currentTask.title"
               type="primary"
