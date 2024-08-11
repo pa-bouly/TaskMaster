@@ -12,12 +12,10 @@ const { width: windowWidth } = useWindowSize()
 watch(
   () => store.taskToEdit,
   () => {
-    isTaskCompleted.value = store.taskToEdit?.isCompleted
     currentTask.value = store.taskToEdit ? { ...store.taskToEdit } : null
   }
 )
 
-const isTaskCompleted = ref(store.taskToEdit?.isCompleted)
 const currentTask = ref<Task | null>(store.taskToEdit ? { ...store.taskToEdit } : null)
 
 const shortcuts = [
@@ -75,11 +73,7 @@ const onSaveClick = () => {
   >
     <div>
       <div v-if="currentTask" class="flex space-x-2">
-        <el-checkbox
-          v-model="isTaskCompleted"
-          size="large"
-          @change="store.toggleTask(currentTask.id)"
-        />
+        <el-checkbox v-model="currentTask.isCompleted" size="large" />
 
         <div class="flex flex-1 flex-col space-y-2">
           <div class="max-w-screen-sm">

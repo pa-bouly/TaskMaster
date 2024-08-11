@@ -18,6 +18,10 @@ const onToggleEvent = (id: number) => {
 const onShowTask = (id: number) => {
   store.showTask(id)
 }
+
+const onDeleteTask = (id: number) => {
+  store.deleteTask(id)
+}
 </script>
 
 <template>
@@ -51,6 +55,7 @@ const onShowTask = (id: number) => {
         :tasks="store.taksFilteredAndSorted"
         @toggle-task="onToggleEvent"
         @show-task="onShowTask"
+        @delete-task="onDeleteTask"
       />
     </div>
 

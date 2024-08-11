@@ -132,7 +132,7 @@ export const useTasksStore = defineStore('tasks', () => {
     taskToEdit.value = task
   }
 
-  const removeTask = (id: number) => {
+  const deleteTask = (id: number) => {
     const index = tasks.value.findIndex((task) => task.id === id)
     tasks.value.splice(index, 1)
   }
@@ -152,7 +152,7 @@ export const useTasksStore = defineStore('tasks', () => {
     showTask,
     hideTask,
     updateTask,
-    removeTask,
+    deleteTask,
     setFilter
   }
 })

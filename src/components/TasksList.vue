@@ -9,6 +9,7 @@ defineProps<{
 const emit = defineEmits<{
   (e: 'toggleTask', id: number): void
   (e: 'showTask', id: number): void
+  (e: 'deleteTask', id: number): void
 }>()
 
 const onToogleEvent = (id: number) => {
@@ -17,6 +18,10 @@ const onToogleEvent = (id: number) => {
 
 const onShowTask = (id: number) => {
   emit('showTask', id)
+}
+
+const onDeleteTask = (id: number) => {
+  emit('deleteTask', id)
 }
 </script>
 
@@ -29,6 +34,7 @@ const onShowTask = (id: number) => {
         :task="task"
         @toggle-task="onToogleEvent"
         @show-task="onShowTask"
+        @delete-task="onDeleteTask"
       />
     </TransitionGroup>
   </div>
