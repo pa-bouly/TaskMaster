@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
-import { ElButton, ElInput, ElDatePicker } from 'element-plus'
+import { ElButton, ElInput } from 'element-plus'
 import { type TaskToAdd } from '@/stores/tasks'
+import DatePicker from '@/components/DatePicker.vue'
 
 const emit = defineEmits<{
   (e: 'addTask', task: TaskToAdd): void
@@ -61,7 +62,8 @@ const clearInputs = () => {
           />
 
           <div class="mt-2 flex justify-between">
-            <el-date-picker v-model="date" size="small" type="date" placeholder="Pick a day" />
+            <DatePicker v-model="date" size="small" @keydown.enter="onSubmit" />
+
             <div class="flex items-center">
               <el-button size="small" @click.stop="onCancel">Cancel</el-button>
               <el-button size="small" type="primary" :disabled="!inputTitle" @click="onSubmit">

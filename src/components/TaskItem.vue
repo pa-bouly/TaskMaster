@@ -1,12 +1,22 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import type { Task } from '@/stores/tasks'
 import { ElCheckbox, ElPopconfirm } from 'element-plus'
 import { useDateFormat } from '@vueuse/core'
-import { Delete } from '@element-plus/icons-vue'
+import { Calendar, Delete } from '@element-plus/icons-vue'
+import dayjs from 'dayjs'
+
 const props = defineProps<{
   task: Task
 }>()
+
+enum DueDateStatus {
+  Undefined,
+  Expired,
+  Yesterday,
+  Today,
+  Future
+}
 
 const emit = defineEmits<{
   (e: 'toggleTask', id: number): void
@@ -35,6 +45,51 @@ const isTaskCompleted = ref(props.task.isCompleted)
 const formattedDueDate = ref(
   props.task.dueDate ? useDateFormat(props.task.dueDate, 'YYYY-MM-DD').value : ''
 )
+
+const dueDateStatus = computed(() => {
+  if (!props.task.dueDate) return DueDateStatus.Undefined
+
+  const yesterday = dayjs().subtract(1, 'day')
+  const today = dayjs()
+
+  if (dayjs(props.task.dueDate).isSame(yesterday, 'day')) {
+    return DueDateStatus.Yesterday
+  }
+  if (dayjs(props.task.dueDate).isSame(today, 'day')) {
+    return DueDateStatus.Today
+  }
+  if (dayjs(props.task.dueDate).isBefore(yesterday, 'day')) {
+    return DueDateStatus.Expired
+  }
+
+  return DueDateStatus.Future
+})
+
+const dueDateStatusColor = computed(() => {
+  switch (dueDateStatus.value) {
+    case DueDateStatus.Expired:
+      return 'text-red-500'
+    case DueDateStatus.Yesterday:
+      return 'text-yellow-500'
+    case DueDateStatus.Today:
+      return 'text-violet-500'
+    case DueDateStatus.Future:
+      return 'text-green-500'
+    default:
+      return 'text-gray-500'
+  }
+})
+
+const dueDateLabel = computed(() => {
+  switch (dueDateStatus.value) {
+    case DueDateStatus.Yesterday:
+      return 'Yesterday'
+    case DueDateStatus.Today:
+      return 'Today'
+    default:
+      return useDateFormat(props.task.dueDate, 'YYYY-MM-DD').value
+  }
+})
 </script>
 
 <template>
@@ -53,7 +108,12 @@ const formattedDueDate = ref(
       <div class="font-light">{{ task.title }}</div>
       <div class="text-sm font-light text-gray-500">{{ task.description }}</div>
 
-      <div>{{ formattedDueDate }}</div>
+      <div class="flex items-center">
+        <el-icon class="mr-1"><Calendar :class="dueDateStatusColor" /></el-icon>
+        <span :class="[dueDateStatusColor, 'text-sm']">
+          {{ dueDateLabel }}
+        </span>
+      </div>
     </div>
 
     <div class="flex items-center">

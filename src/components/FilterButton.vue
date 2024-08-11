@@ -11,6 +11,7 @@ import {
 } from '@element-plus/icons-vue'
 import Popper from 'vue3-popper'
 import { useTasksStore, SortBy, SortDirection } from '@/stores/tasks'
+import DatePicker from '@/components/DatePicker.vue'
 
 const store = useTasksStore()
 
@@ -103,11 +104,10 @@ const onResetClick = () => {
             <el-icon><Calendar /></el-icon>
             <div class="flex items-center justify-between">
               <span class="ml-2 mr-4 text-xs">Due date</span>
-              <el-date-picker
+              <DatePicker
                 v-model="filterDueDate"
                 size="small"
-                type="date"
-                placeholder="Pick a day"
+                :can-select-past-dates="true"
                 :teleported="false"
                 @change="updateFilter"
               />
