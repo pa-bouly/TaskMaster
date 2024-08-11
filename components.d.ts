@@ -7,6 +7,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    CheckboxRounded: typeof import('./src/components/CheckboxRounded.vue')['default']
+    CheckboxWrapper: typeof import('./src/components/CheckboxWrapper.vue')['default']
     DatePicker: typeof import('./src/components/DatePicker.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']

@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import type { Task } from '@/stores/tasks'
-import { ElButton, ElCheckbox, ElInput, ElDialog } from 'element-plus'
+import { ElButton, ElInput, ElDialog } from 'element-plus'
 import { useTasksStore } from '@/stores/tasks'
 import { useWindowSize } from '@vueuse/core'
 import { ElMessage } from 'element-plus'
 import DatePicker from '@/components/DatePicker.vue'
+import CheckboxRounded from '@/components/CheckboxRounded.vue'
 
 const store = useTasksStore()
 const { width: windowWidth } = useWindowSize()
@@ -47,7 +48,7 @@ const onSaveClick = () => {
   >
     <div>
       <div v-if="currentTask" class="flex space-x-2">
-        <el-checkbox v-model="currentTask.isCompleted" size="large" />
+        <CheckboxRounded v-model="currentTask.isCompleted" />
 
         <div class="flex flex-1 flex-col space-y-2">
           <div class="max-w-screen-sm">

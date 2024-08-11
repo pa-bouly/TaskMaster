@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import type { Task } from '@/stores/tasks'
-import { ElCheckbox, ElPopconfirm } from 'element-plus'
+import { ElPopconfirm } from 'element-plus'
 import { useDateFormat } from '@vueuse/core'
 import { Calendar, Delete } from '@element-plus/icons-vue'
 import dayjs from 'dayjs'
+import CheckboxRounded from '@/components/CheckboxRounded.vue'
 
 const props = defineProps<{
   task: Task
@@ -97,7 +98,7 @@ const dueDateLabel = computed(() => {
     class="flex cursor-pointer space-x-2 rounded border border-slate-100 bg-white p-2 shadow-sm transition hover:border-slate-400"
     @click="() => emit('showTask', task.id)"
   >
-    <el-checkbox
+    <CheckboxRounded
       v-model="isTaskCompleted"
       size="large"
       @change="() => emit('toggleTask', task.id)"
