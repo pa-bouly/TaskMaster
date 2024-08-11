@@ -30,8 +30,8 @@ declare module 'vue' {
     PageHeader: typeof import('./src/components/PageHeader.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TaskCard: typeof import('./src/components/TaskCard.vue')['default']
     TaskDialog: typeof import('./src/components/TaskDialog.vue')['default']
-    TaskItem: typeof import('./src/components/TaskItem.vue')['default']
     TasksList: typeof import('./src/components/TasksList.vue')['default']
   }
 }

@@ -105,11 +105,13 @@ const dueDateLabel = computed(() => {
       @click.stop
     />
 
-    <div class="flex flex-1 flex-col">
+    <div class="flex flex-1 flex-col justify-center">
       <div class="font-light">{{ task.title }}</div>
-      <div class="text-sm font-light text-gray-500">{{ task.description }}</div>
+      <div v-if="task.description" class="text-sm font-light text-gray-500">
+        {{ task.description }}
+      </div>
 
-      <div class="flex items-center">
+      <div v-if="props.task.dueDate" class="flex items-center">
         <el-icon class="mr-1"><Calendar :class="dueDateStatusColor" /></el-icon>
         <span :class="[dueDateStatusColor, 'text-sm']">
           {{ dueDateLabel }}

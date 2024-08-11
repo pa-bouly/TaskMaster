@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TaskItem from '@/components/TaskItem.vue'
+import TaskCard from '@/components/TaskCard.vue'
 import type { Task } from '@/stores/tasks'
 
 defineProps<{
@@ -28,7 +28,7 @@ const onDeleteTask = (id: number) => {
 <template>
   <div class="flex flex-col space-y-2">
     <TransitionGroup name="list">
-      <TaskItem
+      <TaskCard
         v-for="task in tasks"
         :key="task.id"
         :task="task"
@@ -37,6 +37,13 @@ const onDeleteTask = (id: number) => {
         @delete-task="onDeleteTask"
       />
     </TransitionGroup>
+
+    <div
+      v-if="tasks.length === 0"
+      class="flex justify-center rounded border border-slate-100 bg-white p-3 font-light italic text-gray-500 shadow-sm"
+    >
+      No tasks found
+    </div>
   </div>
 </template>
 
