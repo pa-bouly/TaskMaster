@@ -7,9 +7,26 @@ html {
 }
 body {
   @apply h-full;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #app {
   @apply h-full;
   background-color: #faf9f8;
+}
+
+:root {
+  /* Element plus overrides */
+
+  --el-color-primary: #4f1862 !important;
+  /* button primary bg color */
+  --el-color-primary-light-3: #370971 !important;
+  /* button primary border color */
+  --el-color-primary-light-5: rgba(55, 9, 113, 0.7) !important;
+  /* hover border color */
+  --el-color-primary-light-7: rgba(55, 9, 113, 0.3) !important;
+  /*  hover bg color */
+  --el-color-primary-light-9: rgba(55, 9, 113, 0.1) !important;
+  /* bg color pressed btn */
+  --el-color-primary-dark-2: #4f1862 !important;
 }

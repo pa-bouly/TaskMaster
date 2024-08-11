@@ -4,6 +4,7 @@ import type { Task } from '@/stores/tasks'
 import { ElButton, ElCheckbox, ElInput, ElDialog } from 'element-plus'
 import { useTasksStore } from '@/stores/tasks'
 import { useWindowSize } from '@vueuse/core'
+import { ElMessage } from 'element-plus'
 
 const store = useTasksStore()
 const { width: windowWidth } = useWindowSize()
@@ -16,7 +17,6 @@ watch(
   }
 )
 
-const showEditForm = ref(false)
 const isTaskCompleted = ref(store.taskToEdit?.isCompleted)
 const currentTask = ref<Task | null>(store.taskToEdit ? { ...store.taskToEdit } : null)
 
@@ -48,14 +48,20 @@ const disabledDate = (time: Date) => {
 }
 
 const onCancelClick = () => {
-  showEditForm.value = false
   currentTask.value = store.taskToEdit ? { ...store.taskToEdit } : null
 }
 
 const onSaveClick = () => {
-  showEditForm.value = false
   if (currentTask.value) {
     store.updateTask({ ...currentTask.value })
+
+    ElMessage({
+      message: 'Task updated.',
+      type: 'success',
+      plain: true
+    })
+
+    store.hideTask()
   }
 }
 </script>
@@ -75,7 +81,7 @@ const onSaveClick = () => {
           @change="store.toggleTask(currentTask.id)"
         />
 
-        <div v-if="showEditForm" class="flex flex-1 flex-col space-y-2">
+        <div class="flex flex-1 flex-col space-y-2">
           <div class="max-w-screen-sm">
             <el-input v-model="currentTask.title" />
           </div>
@@ -103,16 +109,6 @@ const onSaveClick = () => {
               >Save</el-button
             >
           </div>
-        </div>
-
-        <div
-          v-else
-          class="test flex flex-1 cursor-text flex-col space-y-2 rounded border border-slate-100 bg-white p-2 shadow-sm transition hover:border-slate-400"
-          @click="showEditForm = true"
-        >
-          <div class="font-light">{{ store.taskToEdit?.title }}</div>
-          <div class="text-sm font-light text-gray-500">{{ store.taskToEdit?.description }}</div>
-          <div>{{ store.taskToEdit?.dueDate }}</div>
         </div>
       </div>
     </div>
