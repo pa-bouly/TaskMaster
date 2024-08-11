@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import NewTaskItem from '../components/NewTaskItem.vue'
 import { fn } from '@storybook/test'
+import { userEvent, within, expect } from '@storybook/test'
 
 const meta = {
   title: 'NewTaskItem',
@@ -10,7 +11,7 @@ const meta = {
     setup() {
       return { args }
     },
-    template: '<new-task-item  />'
+    template: '<new-task-item v-bind="args"/>'
   }),
 
   args: {
@@ -26,7 +27,27 @@ export const Default: Story = {
   args: {}
 }
 
-// Click on the div to show the form
-export const ShowForm: Story = {
-  args: {}
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+export const FilledForm: Story = {
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    // 👇 Simulate interactions with the component
+    await userEvent.click(canvas.getByTestId('open-form-button'))
+
+    // Wait for the form to open
+    await sleep(1000)
+
+    await userEvent.type(canvas.getByTestId('task-title-input'), 'Task title')
+    await userEvent.type(canvas.getByTestId('task-description-input'), 'Task description')
+
+    await userEvent.click(canvas.getByTestId('add-task-button'))
+    await expect(args.onAddTask).toHaveBeenCalledWith({
+      title: 'Task title',
+      description: 'Task description'
+    })
+  }
 }

@@ -52,13 +52,19 @@ const clearInputs = () => {
     >
       <Transition name="fade" mode="out-in">
         <div v-if="showInput" class="flex flex-1 flex-col">
-          <el-input v-model="inputTitle" placeholder="Add a task" @keydown.enter="onSubmit" />
+          <el-input
+            v-model="inputTitle"
+            placeholder="Add a task"
+            @keydown.enter="onSubmit"
+            data-testid="task-title-input"
+          />
           <el-input
             v-model="inputDescription"
             class="mt-2"
             size="small"
             placeholder="Description"
             @keydown.enter="onSubmit"
+            data-testid="task-description-input"
           />
 
           <div class="mt-2 flex justify-between">
@@ -66,13 +72,23 @@ const clearInputs = () => {
 
             <div class="flex items-center">
               <el-button size="small" @click.stop="onCancel">Cancel</el-button>
-              <el-button size="small" type="primary" :disabled="!inputTitle" @click="onSubmit">
+              <el-button
+                size="small"
+                type="primary"
+                :disabled="!inputTitle"
+                @click="onSubmit"
+                data-testid="add-task-button"
+              >
                 Add
               </el-button>
             </div>
           </div>
         </div>
-        <div v-else class="flex items-center justify-center space-x-2 font-light text-gray-500">
+        <div
+          v-else
+          class="flex items-center justify-center space-x-2 font-light text-gray-500"
+          data-testid="open-form-button"
+        >
           <el-icon><Plus /></el-icon>
           <span> Add a new task </span>
         </div>

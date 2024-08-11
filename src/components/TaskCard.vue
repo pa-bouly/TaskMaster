@@ -7,9 +7,14 @@ import { Calendar, Delete } from '@element-plus/icons-vue'
 import dayjs from 'dayjs'
 import CheckboxRounded from '@/components/CheckboxRounded.vue'
 
-const props = defineProps<{
+export interface Props {
   task: Task
-}>()
+  useTeleport?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  useTeleport: true
+})
 
 enum DueDateStatus {
   Undefined,
@@ -96,12 +101,14 @@ const dueDateLabel = computed(() => {
 <template>
   <div
     class="flex cursor-pointer space-x-2 rounded border border-slate-100 bg-white p-2 shadow-sm transition hover:border-slate-400"
+    data-testid="task-card"
     @click="() => emit('showTask', task.id)"
   >
     <CheckboxRounded
       v-model="isTaskCompleted"
       size="large"
       @change="() => emit('toggleTask', task.id)"
+      role="checkbox"
       @click.stop
     />
 
@@ -120,9 +127,19 @@ const dueDateLabel = computed(() => {
     </div>
 
     <div class="flex items-center">
-      <el-popconfirm title="Are you sure to delete this?" @confirm="emit('deleteTask', task.id)">
+      <el-popconfirm
+        title="Are you sure to delete this?"
+        @confirm="emit('deleteTask', task.id)"
+        :teleported="props.useTeleport"
+      >
         <template #reference>
-          <el-button :icon="Delete" circle @click.stop aria-label="delete" />
+          <el-button
+            :icon="Delete"
+            circle
+            @click.stop
+            aria-label="delete"
+            data-testid="delete-task-button"
+          />
         </template>
       </el-popconfirm>
     </div>

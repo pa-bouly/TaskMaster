@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import TaskCard from '../components/TaskCard.vue'
 import { fn } from '@storybook/test'
+import { userEvent, within, expect } from '@storybook/test'
 
 const meta = {
   title: 'TaskCard',
@@ -10,7 +11,7 @@ const meta = {
     setup() {
       return { args }
     },
-    template: '<task-card :task="args.task" />'
+    template: '<task-card v-bind="args" />'
   }),
 
   args: {
@@ -21,6 +22,7 @@ const meta = {
       isCompleted: false,
       dueDate: undefined
     },
+    useTeleport: false,
     onDeleteTask: fn(),
     onShowTask: fn(),
     onToggleTask: fn()
@@ -112,5 +114,36 @@ export const FutureDueDate: Story = {
       isCompleted: false,
       dueDate: (new Date() as any).setDate(new Date().getDate() + 1)
     }
+  }
+}
+
+export const ClickToComplete: Story = {
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    await userEvent.click(canvas.getAllByRole('checkbox')[0])
+    await expect(args.onToggleTask).toHaveBeenCalledWith(args.task.id)
+
+    expect(canvas.getAllByRole('checkbox')[0]).toHaveClass('is-checked')
+  }
+}
+
+export const ClickToDelete: Story = {
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    await userEvent.click(canvas.getByTestId('delete-task-button'))
+    await userEvent.click(canvas.getByText('Yes'))
+
+    await expect(args.onDeleteTask).toHaveBeenCalledWith(args.task.id)
+  }
+}
+
+export const ClickToShow: Story = {
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    await userEvent.click(canvas.getByTestId('task-card'))
+    await expect(args.onShowTask).toHaveBeenCalledWith(args.task.id)
   }
 }

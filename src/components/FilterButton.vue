@@ -60,7 +60,9 @@ const onResetClick = () => {
 
 <template>
   <Popper arrow v-bind:show="props.isOpenByDefault ? showPopper : undefined">
-    <el-button :icon="Operation" @click="showPopper = true"> View </el-button>
+    <el-button :icon="Operation" data-testid="show-filters-btn" @click="showPopper = true">
+      View
+    </el-button>
     <template #content>
       <div class="shadow-mg round relative border bg-white p-4">
         <div class="flex items-center">
@@ -72,6 +74,7 @@ const onResetClick = () => {
               size="small"
               @change="updateFilter"
               aria-label="switch-to-show-completed-tasks"
+              data-testid="show-completed-tasks-switch"
             />
           </div>
         </div>
@@ -83,13 +86,17 @@ const onResetClick = () => {
               <span class="ml-2 mr-4 text-xs">Sorting</span>
 
               <el-dropdown trigger="click" :teleported="false" tabindex="0" @command="onSort">
-                <span class="el-dropdown-link">
+                <span class="el-dropdown-link" data-testid="sort-dropdown">
                   {{ sortLabel }}<el-icon class="el-icon--right"><arrow-down /></el-icon>
                 </span>
                 <template #dropdown>
                   <el-dropdown-menu>
-                    <el-dropdown-item :command="SortBy.title">Title</el-dropdown-item>
-                    <el-dropdown-item :command="SortBy.dueDate">Due date</el-dropdown-item>
+                    <el-dropdown-item :command="SortBy.title" data-testid="sort-by-title">
+                      Title
+                    </el-dropdown-item>
+                    <el-dropdown-item :command="SortBy.dueDate" data-testid="sort-by-due-date">
+                      Due date
+                    </el-dropdown-item>
                   </el-dropdown-menu>
                 </template>
               </el-dropdown>
@@ -105,8 +112,16 @@ const onResetClick = () => {
               <span class="ml-2 mr-4 text-xs">Direction</span>
 
               <el-radio-group v-model="directionValue" size="small" @change="updateFilter">
-                <el-radio-button label="Ascending" :value="SortDirection.asc" />
-                <el-radio-button label="Descending" :value="SortDirection.desc" />
+                <el-radio-button
+                  label="Ascending"
+                  :value="SortDirection.asc"
+                  data-testid="sort-ascending"
+                />
+                <el-radio-button
+                  label="Descending"
+                  :value="SortDirection.desc"
+                  data-testid="sort-descending"
+                />
               </el-radio-group>
             </div>
           </div>
@@ -117,12 +132,14 @@ const onResetClick = () => {
           <div class="mt-2 flex items-center">
             <el-icon><Calendar /></el-icon>
             <div class="flex items-center justify-between">
-              <span class="ml-2 mr-4 text-xs">Due date</span>
+              <label for="filter-due-date" class="ml-2 mr-4 cursor-pointer text-xs">Due date</label>
               <DatePicker
                 v-model="filterDueDate"
                 size="small"
                 :can-select-past-dates="true"
+                data-testid="datepicker-task"
                 :teleported="false"
+                id="filter-due-date"
                 @change="updateFilter"
               />
             </div>
@@ -130,7 +147,9 @@ const onResetClick = () => {
         </div>
 
         <div class="mt-2 border-solid">
-          <el-button type="danger" size="small" @click="onResetClick">Reset</el-button>
+          <el-button type="danger" size="small" data-testid="reset-filter-btn" @click="onResetClick"
+            >Reset</el-button
+          >
         </div>
       </div>
     </template>

@@ -48,11 +48,19 @@ const onSaveClick = () => {
   >
     <div>
       <div v-if="currentTask" class="flex space-x-2">
-        <CheckboxRounded v-model="currentTask.isCompleted" aria-label="checkbox-task" />
+        <CheckboxRounded
+          v-model="currentTask.isCompleted"
+          aria-label="checkbox-task"
+          role="checkbox"
+        />
 
         <div class="flex flex-1 flex-col space-y-2">
           <div class="max-w-screen-sm">
-            <el-input v-model="currentTask.title" placeholder="title" />
+            <el-input
+              v-model="currentTask.title"
+              placeholder="title"
+              data-testid="task-title-input"
+            />
           </div>
 
           <div class="max-w-screen-sm">
@@ -61,14 +69,20 @@ const onSaveClick = () => {
               type="textarea"
               :autosize="{ minRows: 2 }"
               placeholder="Task description"
+              data-testid="task-description-input"
             />
           </div>
 
-          <date-picker v-model="currentTask.dueDate" />
+          <DatePicker v-model="currentTask.dueDate" />
 
           <div class="mt-4 flex justify-between">
             <el-button @click="onCancelClick">Cancel</el-button>
-            <el-button :disabled="!currentTask.title" type="primary" @click="onSaveClick">
+            <el-button
+              :disabled="!currentTask.title"
+              type="primary"
+              @click="onSaveClick"
+              data-testid="save-task-button"
+            >
               Save
             </el-button>
           </div>
