@@ -2,10 +2,10 @@
 import { ref } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 import { ElButton, ElInput, ElDatePicker } from 'element-plus'
-import { type Task } from '@/stores/tasks'
+import { type TaskToAdd } from '@/stores/tasks'
 
 const emit = defineEmits<{
-  (e: 'addTask', task: Omit<Task, 'id' | 'isCompleted'>): void
+  (e: 'addTask', task: TaskToAdd): void
 }>()
 
 const showInput = ref(false)

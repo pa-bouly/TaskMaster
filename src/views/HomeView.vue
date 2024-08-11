@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { useTasksStore, type Task } from '@/stores/tasks'
+import { useTasksStore, type TaskToAdd } from '@/stores/tasks'
 import TasksList from '@/components/TasksList.vue'
 import TaskDialog from '@/components/TaskDialog.vue'
 import NewTaskItem from '@/components/NewTaskItem.vue'
+import FilterButton from '@/components/FilterButton.vue'
 
 const store = useTasksStore()
 
-const onAddTask = (task: Omit<Task, 'id' | 'isCompleted'>) => {
+const onAddTask = (task: TaskToAdd) => {
   store.addTask(task)
 }
 
@@ -23,16 +24,48 @@ const onShowTask = (id: number) => {
   <main>
     <div class="container mx-auto mt-2 px-2 py-4">
       <div class="mb-2 flex items-center justify-between">
-        <div>{{ store.tasks.length }} tasks</div>
+        <div>
+          <Transition name="counter" mode="out-in">
+            <span :key="store.tasks.length"> {{ store.tasks.length }} </span>
+          </Transition>
+          <span> tasks / </span>
 
-        <div>{{ store.completedTasks.length }} completed task(s)</div>
+          <Transition name="counter" mode="out-in">
+            <span :key="store.completedTasks.length">
+              {{ store.completedTasks.length }}
+            </span>
+          </Transition>
+          <span>
+            {{ store.completedTasks.length > 1 ? ' completed tasks' : ' completed task' }}
+          </span>
+        </div>
+
+        <div>
+          <FilterButton />
+        </div>
       </div>
 
       <NewTaskItem class="mb-2" @add-task="onAddTask" />
 
-      <TasksList :tasks="store.tasks" @toggle-task="onToggleEvent" @show-task="onShowTask" />
+      <TasksList
+        :tasks="store.taksFilteredAndSorted"
+        @toggle-task="onToggleEvent"
+        @show-task="onShowTask"
+      />
     </div>
 
     <TaskDialog />
   </main>
 </template>
+
+<style scoped>
+.counter-enter-active,
+.counter-leave-active {
+  transition: opacity 0.1s ease;
+}
+
+.counter-enter-from,
+.counter-leave-to {
+  opacity: 0;
+}
+</style>
