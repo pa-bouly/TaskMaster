@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useTasksStore, type TaskToAdd } from '@/stores/tasks'
+import PageHeader from '@/components/PageHeader.vue'
 import TasksList from '@/components/TasksList.vue'
 import TaskDialog from '@/components/TaskDialog.vue'
 import NewTaskItem from '@/components/NewTaskItem.vue'
@@ -22,45 +23,52 @@ const onShowTask = (id: number) => {
 const onDeleteTask = (id: number) => {
   store.deleteTask(id)
 }
+
+const onSearchTask = (query: string) => {
+  store.searchTask(query)
+}
 </script>
 
 <template>
-  <main>
-    <div class="container mx-auto mt-2 px-2 py-4">
-      <div class="mb-2 flex items-center justify-between">
-        <div>
-          <Transition name="counter" mode="out-in">
-            <span :key="store.tasks.length"> {{ store.tasks.length }} </span>
-          </Transition>
-          <span> tasks / </span>
+  <div>
+    <PageHeader @search="onSearchTask" />
+    <main>
+      <div class="container mx-auto mt-2 px-2 py-4">
+        <div class="mb-2 flex items-center justify-between">
+          <div>
+            <Transition name="counter" mode="out-in">
+              <span :key="store.tasks.length"> {{ store.tasks.length }} </span>
+            </Transition>
+            <span> tasks / </span>
 
-          <Transition name="counter" mode="out-in">
-            <span :key="store.completedTasks.length">
-              {{ store.completedTasks.length }}
+            <Transition name="counter" mode="out-in">
+              <span :key="store.completedTasks.length">
+                {{ store.completedTasks.length }}
+              </span>
+            </Transition>
+            <span>
+              {{ store.completedTasks.length > 1 ? ' completed tasks' : ' completed task' }}
             </span>
-          </Transition>
-          <span>
-            {{ store.completedTasks.length > 1 ? ' completed tasks' : ' completed task' }}
-          </span>
+          </div>
+
+          <div>
+            <FilterButton />
+          </div>
         </div>
 
-        <div>
-          <FilterButton />
-        </div>
+        <NewTaskItem class="mb-2" @add-task="onAddTask" />
+
+        <TasksList
+          :tasks="store.taksFilteredAndSorted"
+          @toggle-task="onToggleEvent"
+          @show-task="onShowTask"
+          @delete-task="onDeleteTask"
+        />
       </div>
 
-      <NewTaskItem class="mb-2" @add-task="onAddTask" />
-
-      <TasksList
-        :tasks="store.taksFilteredAndSorted"
-        @toggle-task="onToggleEvent"
-        @show-task="onShowTask"
-        @delete-task="onDeleteTask"
-      />
-    </div>
-
-    <TaskDialog />
-  </main>
+      <TaskDialog />
+    </main>
+  </div>
 </template>
 
 <style scoped>

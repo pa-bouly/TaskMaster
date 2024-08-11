@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import NewTaskItem from '../components/NewTaskItem.vue'
 import { fn } from '@storybook/test'
 import { userEvent, within, expect } from '@storybook/test'
+import { sleep } from '../../.storybook/helpers'
 
 const meta = {
   title: 'NewTaskItem',
@@ -25,10 +26,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {}
-}
-
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 export const FilledForm: Story = {

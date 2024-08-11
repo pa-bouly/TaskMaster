@@ -44,6 +44,7 @@ export const useTasksStore = defineStore(
       sortDirection: undefined,
       filterByDate: undefined
     })
+    const searchInput = ref('')
 
     const completedTasks = computed(() => {
       return tasks.value.filter((task) => task.isCompleted)
@@ -51,6 +52,15 @@ export const useTasksStore = defineStore(
 
     const filteredTasks = computed(() => {
       let copiedTasks = tasks.value.slice()
+
+      if (searchInput.value) {
+        copiedTasks = copiedTasks.filter(
+          (task) =>
+            task.title.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+            task.description?.toLowerCase().includes(searchInput.value.toLowerCase())
+        )
+      }
+
       if (!filter.value.isCompleted) {
         copiedTasks = tasks.value.filter((task) => !task.isCompleted)
       }
@@ -147,6 +157,10 @@ export const useTasksStore = defineStore(
       filter.value = newFilter
     }
 
+    const searchTask = (search: string) => {
+      searchInput.value = search
+    }
+
     return {
       tasks,
       taskToEdit,
@@ -159,7 +173,8 @@ export const useTasksStore = defineStore(
       hideTask,
       updateTask,
       deleteTask,
-      setFilter
+      setFilter,
+      searchTask
     }
   },
   {
