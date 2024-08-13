@@ -126,7 +126,7 @@ const dueDateLabel = computed(() => {
       </div>
     </div>
 
-    <div class="flex items-center">
+    <div class="flex items-center" @click.stop>
       <el-popconfirm
         title="Are you sure to delete this?"
         @confirm="emit('deleteTask', task.id)"
