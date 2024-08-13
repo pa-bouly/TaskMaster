@@ -34,7 +34,7 @@ const onDropdownItemClick = (command: string) => {
 
 <template>
   <header
-    class="sticky top-0 flex flex-wrap items-center justify-between gap-3 bg-white p-4 shadow-sm sm:flex-nowrap"
+    class="sticky top-0 flex flex-wrap items-center justify-between gap-3 p-4 shadow-sm sm:flex-nowrap"
   >
     <h1 class="mr-2 text-2xl font-medium tracking-wide">TaskMaster</h1>
 

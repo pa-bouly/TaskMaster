@@ -14,7 +14,8 @@
     "storybook": "storybook dev -p 6006",
     "test-storybook": "test-storybook",
     "test-storybook-coverage": "test-storybook --coverage",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_c90dd81f76d145b"
   },
   "dependencies": {
     "@types/firebase": "^3.2.1",
@@ -50,6 +51,7 @@
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/tsconfig": "^0.5.1",
     "autoprefixer": "^10.4.20",
+    "chromatic": "^11.7.0",
     "eslint": "^8.57.0",
     "eslint-plugin-storybook": "^0.8.0",
     "eslint-plugin-vue": "^9.23.0",
