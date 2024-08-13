@@ -7,10 +7,16 @@ The app is fully responsive.
 
 ## Project Setup
 
-Install dependencies:
+Install dependencies of the project:
 
 ```sh
 npm install
+```
+
+If you don't have Playwright (for the tests) installed globally on your computer yet:
+
+```sh
+npx playwright install
 ```
 
 ## Start the project
@@ -42,7 +48,7 @@ It is possible to directly launch the interaction tests with the coverage. **Be 
 npm run test-storybook-coverage
 ```
 
-The coverage file will be available [here](./coverage/storybook/lcov-report/index.html) : `./coverage/storybook/lcov-report/index.html`
+The coverage file will be available here: `./coverage/storybook/lcov-report/index.html`
 
 _(open it with you default browser)_
 
@@ -77,4 +83,4 @@ To test if there is no Typescript errors
 npm run type-check
 ```
 
-I used some colors found on mangopay.com to be more familiar :art:
+For the main colors, I've been inspired by mangopay.com :art:
