@@ -104,7 +104,7 @@ const onResetClick = () => {
           </div>
           <div v-if="sortValue" class="mt-2 flex items-center">
             <el-icon>
-              <SortUp v-if="directionValue === 'desc'" />
+              <SortUp v-if="directionValue === SortDirection.desc" />
 
               <SortDown v-else
             /></el-icon>
@@ -135,11 +135,11 @@ const onResetClick = () => {
               <label for="filter-due-date" class="ml-2 mr-4 cursor-pointer text-xs">Due date</label>
               <DatePicker
                 v-model="filterDueDate"
+                id="filter-due-date"
                 size="small"
-                :can-select-past-dates="true"
+                can-select-past-dates
                 data-testid="datepicker-task"
                 :teleported="false"
-                id="filter-due-date"
                 @change="updateFilter"
               />
             </div>
@@ -147,9 +147,14 @@ const onResetClick = () => {
         </div>
 
         <div class="mt-2 border-solid">
-          <el-button type="danger" size="small" data-testid="reset-filter-btn" @click="onResetClick"
-            >Reset</el-button
+          <el-button
+            type="danger"
+            size="small"
+            data-testid="reset-filter-btn"
+            @click="onResetClick"
           >
+            Reset
+          </el-button>
         </div>
       </div>
     </template>

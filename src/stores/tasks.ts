@@ -78,31 +78,11 @@ export const useTasksStore = defineStore(
       const tasksToSort = filteredTasks.value.slice()
 
       if (filter.value.sortBy === SortBy.dueDate) {
-        return tasksToSort.sort((a, b) => {
-          if (!a.dueDate) {
-            return -1
-          }
-
-          if (!b.dueDate) {
-            return 1
-          }
-
-          if (filter.value.sortDirection === SortDirection.asc) {
-            return dayjs(a.dueDate).diff(dayjs(b.dueDate))
-          }
-
-          return dayjs(b.dueDate).diff(dayjs(a.dueDate))
-        })
+        return sortTasksByDueDate(tasksToSort, filter.value.sortDirection || SortDirection.asc)
       }
 
       if (filter.value.sortBy === SortBy.title) {
-        return tasksToSort.sort((a, b) => {
-          if (filter.value.sortDirection === SortDirection.asc) {
-            return a.title.localeCompare(b.title)
-          }
-
-          return b.title.localeCompare(a.title)
-        })
+        return sortTasksByTitle(tasksToSort, filter.value.sortDirection || SortDirection.asc)
       }
 
       return tasksToSort
@@ -181,3 +161,31 @@ export const useTasksStore = defineStore(
     persist: true
   }
 )
+
+const sortTasksByDueDate = (tasks: Task[], direction: SortDirection) => {
+  return tasks.sort((a, b) => {
+    if (!a.dueDate) {
+      return -1
+    }
+
+    if (!b.dueDate) {
+      return 1
+    }
+
+    if (direction === SortDirection.asc) {
+      return dayjs(a.dueDate).diff(dayjs(b.dueDate))
+    }
+
+    return dayjs(b.dueDate).diff(dayjs(a.dueDate))
+  })
+}
+
+const sortTasksByTitle = (tasks: Task[], direction: SortDirection) => {
+  return tasks.sort((a, b) => {
+    if (direction === SortDirection.asc) {
+      return a.title.localeCompare(b.title)
+    }
+
+    return b.title.localeCompare(a.title)
+  })
+}
