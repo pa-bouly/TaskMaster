@@ -32,7 +32,7 @@ export const Search: Story = {
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement)
 
-    await userEvent.type(canvas.getByTestId('search-input'), 'test')
+    await userEvent.type(canvas.getByTestId('search-input-desktop'), 'test')
 
     // Wait for the search due to debounce
     await sleep(400)

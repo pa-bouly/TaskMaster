@@ -59,7 +59,7 @@ const onSearchTask = (query: string) => {
         <NewTaskItem class="mb-2" @add-task="onAddTask" />
 
         <TasksList
-          :tasks="store.taksFilteredAndSorted"
+          :tasks="store.filteredAndSortedTasks"
           @toggle-task="onToggleEvent"
           @show-task="onShowTask"
           @delete-task="onDeleteTask"

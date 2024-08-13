@@ -21,7 +21,7 @@ watch(
 const currentTask = ref<Task | null>(store.taskToEdit ? { ...store.taskToEdit } : null)
 
 const onCancelClick = () => {
-  currentTask.value = store.taskToEdit ? { ...store.taskToEdit } : null
+  currentTask.value = store.taskToEdit?.id ? { ...store.taskToEdit } : null
 }
 
 const onSaveClick = () => {

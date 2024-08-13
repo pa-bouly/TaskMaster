@@ -10,12 +10,16 @@ const meta = {
     components: { TaskDialog },
     setup() {
       const store = useTasksStore()
+
+      store.tasks = []
+
       store.addTask({
         title: 'Task 1',
         description: 'Description of Task 1',
         dueDate: undefined
       })
-      store.showTask(1)
+
+      store.showTask(store.tasks.length)
 
       return { args }
     },
@@ -66,7 +70,7 @@ export const FilledForm: Story = {
 export const CancelForm: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
-    const titleUpdate = 'Task title updated'
+    const titleUpdate = 'Task title to cancel'
 
     const titleInput = canvas.getByTestId('task-title-input')
     await userEvent.clear(titleInput)

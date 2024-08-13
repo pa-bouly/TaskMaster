@@ -62,7 +62,7 @@ export const useTasksStore = defineStore(
       }
 
       if (!filter.value.isCompleted) {
-        copiedTasks = tasks.value.filter((task) => !task.isCompleted)
+        copiedTasks = copiedTasks.filter((task) => !task.isCompleted)
       }
 
       if (filter.value.filterByDate) {
@@ -74,7 +74,7 @@ export const useTasksStore = defineStore(
       return copiedTasks
     })
 
-    const taksFilteredAndSorted = computed(() => {
+    const filteredAndSortedTasks = computed(() => {
       const tasksToSort = filteredTasks.value.slice()
 
       if (filter.value.sortBy === SortBy.dueDate) {
@@ -165,7 +165,7 @@ export const useTasksStore = defineStore(
       tasks,
       taskToEdit,
       completedTasks,
-      taksFilteredAndSorted,
+      filteredAndSortedTasks,
       isTaskDialogVisible,
       addTask,
       toggleTask,
